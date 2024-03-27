@@ -1,0 +1,119 @@
+{
+    "name": "saturnphp/app.todayintel.com",
+    "description": "Today Intel is a forum for discussing current events and news and a social media manager ",
+    "type": "project",
+    "keywords": [
+        "forum"
+    ],
+    "require": {
+        "php": "^8.3",
+        "atymic/twitter": "^3.2",
+        "calebporzio/sushi": "^2.5",
+        "coderjerk/bird-elephant": "^0.7.1",
+        "cweagans/composer-patches": "^1.7",
+        "dacastro4/laravel-gmail": "dev-master",
+        "filament/filament": "^3.2",
+        "filament/notifications": "^3.2",
+        "google/apiclient": "^2.12.1",
+        "guzzlehttp/guzzle": ">=7.5.0",
+        "invaders-xx/filament-jsoneditor": "^3.1",
+        "jonathantorres/medium-sdk": "dev-master",
+        "laravel-workflow/laravel-workflow": "*",
+        "laravel/framework": "^10",
+        "laravel/horizon": "^5.23",
+        "laravel/sail": "^1.28",
+        "laravel/sanctum": "^3.3",
+        "laravel/socialite": "^5.12",
+        "laravel/tinker": "^2.8",
+        "league/flysystem": "^3.25",
+        "league/oauth1-client": "^1.10",
+        "league/oauth2-facebook": "dev-main",
+        "league/oauth2-github": "dev-main",
+        "league/oauth2-google": "dev-main",
+        "league/oauth2-instagram": "dev-main",
+        "league/oauth2-linkedin": "^5.1",
+        "lucidarch/lucid": "^1.0",
+        "saloonphp/cache-plugin": "^3.0",
+        "saloonphp/saloon": "^3.0",
+        "smolblog/oauth2-twitter": "dev-main",
+        "socialiteproviders/twitter": "^4.1",
+        "spatie/laravel-data": ">=3.0.0",
+        "symfony/dom-crawler": "^6.4",
+        "symfony/expression-language": "^7.0",
+        "theodo-group/llphant": "*",
+        "tumblr/tumblr": "dev-master",
+        "utxo-one/twitter-ultimate-php": "^0.1.9",
+        "waterhole/core": "^0.4",
+        "wire-elements/modal": "^2.0"
+    },
+    "require-dev": {
+        "nunomaduro/collision": "^7.0",
+        "spatie/laravel-ignition": "^2.0",
+        "symplify/vendor-patches": "^11.2",
+        "barryvdh/laravel-debugbar": "^3.10",
+        "fakerphp/faker": "^1.9.1",
+        "larastan/larastan": "^2.0",
+        "laravel-shift/cli": "^0.2.9",
+        "laravel/breeze": "^1.28",
+        "laravel/pint": "^1.0",
+        "mockery/mockery": "^1.4.4",
+        "nunomaduro/collision": "^7.0",
+        "phpunit/phpunit": "^10.1",
+        "rector/rector": "^1.0",
+        "ryoluo/sail-ssl": "^1.2",
+        "spatie/laravel-ignition": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
+            "@php artisan waterhole:cache:clear"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi",
+            "@php artisan storage:link --ansi",
+            "@php artisan vendor:publish --tag=waterhole-config"
+        ]
+    },
+    "extra": {
+        "patches": {
+            "waterhole/core": {
+                "Remove licence check": "./patches/waterhole-core-src-view-components-cp-version-php.patch"
+            }
+        },
+        "laravel": {
+            "dont-discover": []
+        },
+        "composer-exit-on-patch-failure": true
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true,
+            "cweagans/composer-patches": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "path",
+            "url": "extensions/*"
+        }
+    ]
+}

@@ -1,0 +1,35 @@
+/*
+|--------------------------------------------------------------------------
+| App CSS
+|--------------------------------------------------------------------------
+|
+| Put any custom CSS in this file, and it will be loaded on every page,
+| following Waterhole's default CSS. To discover more variables and
+| classes you might like to override, read about Waterhole's design system:
+|
+| https://waterhole.dev/docs/design/overview
+|
+*/
+
+:root {
+    /* Main accent color */
+    --palette-accent-h: 250;
+    --palette-accent-s: 93%;
+    --palette-accent-l: 58%;
+}
+
+[data-theme='light'] {
+    /* Interface colors in light mode */
+    --palette-bg-hsl: 250 38% 98%;
+    --palette-surface-hsl: 0 100% 100%;
+    --palette-text-hsl: 0 0% 0%;
+    --palette-muted-hsl: 250 20% 50%;
+}
+
+[data-theme='dark'] {
+    /* Interface colors in dark mode */
+    --palette-bg-hsl: 250 20% 8%;
+    --palette-surface-hsl: 250 20% 12%;
+    --palette-text-hsl: 250 20% 93%;
+    --palette-muted-hsl: 250 20% 60%;
+}

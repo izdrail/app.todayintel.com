@@ -1,0 +1,33 @@
+{
+    "name": "saturnphp/intel",
+    "description": "A Laravel package for waterhole cms",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "role": "Developer",
+            "name": "Stefan",
+            "email": "Stefan@LzoMedia.com",
+            "homepage": "https://lzomedia.com/"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SaturnPHP\\Intel\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SaturnPHP\\Intel\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.1|^8.2|^8.3",
+        "guzzlehttp/guzzle": "^7",
+        "spatie/laravel-data": "3.9.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.0",
+        "phpunit/phpunit": "^9.5"
+    }
+}

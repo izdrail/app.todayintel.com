@@ -1,0 +1,11 @@
+--- /dev/null
++++ ../src/Providers/FormatterServiceProvider.php
+@@ -37,7 +37,7 @@
+                 $config->Autolink;
+                 $config->Litedown;
+                 $config->PipeTables;
+-                $config->TaskLists;
++//                $config->TaskLists;
+                 $config->Autovideo;
+                 $config->Autoimage;
+ 

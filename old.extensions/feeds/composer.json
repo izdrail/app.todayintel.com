@@ -1,0 +1,50 @@
+{
+    "name": "saturnphp/feeds",
+    "description": "A set of tools to find feeds from different sources ",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "role": "Developer",
+            "name": "Stefan I",
+            "email": "Stefan@Cornatul.com",
+            "homepage": "https://cornatul.com/"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SaturnPHP\\Feeds\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SaturnPHP\\Feeds\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.1",
+        "guzzlehttp/guzzle": ">=7.5.0",
+        "illuminate/support": "^9|^10",
+        "laminas/laminas-feed": "2.23.x-dev",
+        "league/html-to-markdown": "^5.2@dev"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.5",
+        "orchestra/testbench": "^7.0",
+        "phpunit/phpunit": "^9.5"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": false,
+    "config": {
+        "sort-packages": true,
+        "preferred-install": "dist",
+        "optimize-autoloader": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SaturnPHP\\Feeds\\FeedsServiceProvider"
+            ]
+        }
+    }
+}

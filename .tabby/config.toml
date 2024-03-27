@@ -1,0 +1,7 @@
+# Index three repositories' source code as additional context for code completion.
+
+[[repositories]]
+name = "app.todayintel.com"
+git_url = "https://github.com/saturnphp/app.todayintel.com"
+
+

@@ -1,0 +1,53 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "mix",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
+        "prod": "npm run production",
+        "production": "mix --production"
+    },
+    "devDependencies": {
+        "@babel/preset-react": "^7.23.3",
+        "@chat-ui/vue3": "^1.0.0",
+        "laravel-mix": "^6.0.6",
+        "lodash": "^4.17.19",
+        "sass": "^1.32.11",
+        "sass-loader": "^11.0.1",
+        "vue": "^3.2.45",
+        "vue-loader": "^16.1.0"
+    },
+    "dependencies": {
+        "@cloudflare/ai": "^1.0.39",
+        "@kangc/v-md-editor": "^2.3.18",
+        "@yeger/vue-masonry-wall": "^3.0.40",
+        "bad-words": "^3.0.4",
+        "bootstrap-dark-5": "^1.1.3",
+        "daisyui": "^4.4.19",
+        "datatables.net-bs5": "^1.12.1",
+        "mix-tailwindcss": "^1.3.0",
+        "moment": "^2.29.4",
+        "openai": "^4.20.1",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-ga4": "^2.1.0",
+        "react-icons": "^4.12.0",
+        "react-markdown": "^9.0.1",
+        "react-scripts": "^5.0.1",
+        "react-syntax-highlighter": "^15.5.0",
+        "react-tooltip": "^5.25.0",
+        "remark-gfm": "^4.0.0",
+        "talkjs": "^0.18.0",
+        "v3-infinite-loading": "^1.0.6",
+        "vue": "^3.2.37",
+        "vue-bot-ui": "^0.2.8",
+        "vue-ssr-carousel": "^1.4.0",
+        "vue-timeago": "^5.1.3",
+        "vue-timeago3": "^2.3.0",
+        "vue3-carousel": "^0.1.40",
+        "vue3-tabs-component": "^1.3.6",
+        "vue3-timeago": "^1.0.6"
+    }
+}

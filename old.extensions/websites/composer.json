@@ -1,0 +1,25 @@
+{
+    "name": "cornatul/websites",
+    "type": "waterhole-extension",
+    "description": "",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Cornatul\\Websites\\": "src/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Cornatul\\Websites\\WebsitesServiceProvider"
+            ]
+        },
+        "waterhole": {
+            "name": "Websites"
+        }
+    }
+}
