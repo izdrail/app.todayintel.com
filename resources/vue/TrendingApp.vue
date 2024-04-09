@@ -13,7 +13,7 @@
         <!-- Trending -->
         <div class="gap-lg">
             <a @click="getArticles(keyword.keyword)" class="badge" v-for="keyword in keywords">
-                {{ keyword.keyword }} : {{ keyword.count }}
+                {{ keyword.keyword }}
             </a>
         </div>
 

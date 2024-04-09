@@ -11,7 +11,7 @@ class KeywordDTO extends Data
 
     public int $count;
 
-    public array|int $sentiment;
+    public array $sentiment;
 
     public string $appeared_at;
 }

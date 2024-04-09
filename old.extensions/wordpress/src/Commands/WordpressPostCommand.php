@@ -3,21 +3,12 @@ declare(strict_types=1);
 
 namespace Cornatul\Wordpress\Commands;
 
-use Carbon\Carbon;
-
+use App\Clients\WordpressRestClient;
 use Cornatul\Feeds\Models\Article;
-use Cornatul\Wordpress\Clients\WordpressRestClient;
-use Cornatul\Wordpress\DTO\WordpressPostDTO;
-
 use Cornatul\Wordpress\Jobs\WordpressRestPostCreator;
 use Cornatul\Wordpress\Models\WordpressWebsite;
-use Cornatul\Wordpress\Repositories\Interfaces\WordpressRestInterface;
 use Cornatul\Wordpress\Services\Rest\WordpressPostRestService;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
-use Saloon\Exceptions\InvalidResponseClassException;
-use Saloon\Exceptions\PendingRequestException;
 
 class WordpressPostCommand extends Command
 {
@@ -25,29 +16,36 @@ class WordpressPostCommand extends Command
 
     protected $description = 'This command will post a selected article to wordpress';
 
-    protected ClientInterface $client;
-
-    public function __construct(ClientInterface $client)
-    {
+    public function __construct(
+        private readonly Collection $articles,
+        private readonly WordpressWebsite $wordpressWebsite,
+        private readonly WordpressRestPostCreator $wordpressRestPostCreator
+    ) {
         parent::__construct();
-
-        $this->client = $client;
     }
 
     /**
-     * @throws GuzzleException
-     * @throws \JsonException
+     * @throws \RuntimeException
      */
     public function handle(): void
     {
+        $dispatchedJobs = new Collection();
 
-        $response = collect();
-        $articles = Article::orderBy('id', 'asc')->get();
-        $wordpressWebsite = WordpressWebsite::first();
-        foreach ($articles as $article) {
-            info('Posting article ' . $article->id . ' to wordpress');
-            dispatch(new WordpressRestClient($article,$wordpressWebsite))->onQueue('wordpress_publish');
+        /** @var Article $article */
+        foreach ($this->articles as $article) {
+            try {
+                info('Posting article ' . $article->id . ' to Wordpress');
+
+                $this->wordpressRestPostCreator->handle(
+                    new WordpressRestClient($article, $this->wordpressWebsite)
+                );
+
+                $dispatchedJobs->push($article);
+            } catch (\RuntimeException $exception) {
+                $this->error('Failed to dispatch job: ' . $exception->getMessage());
+            }
         }
-        $this->info('Done' . $response->count() . ' articles posted');
+
+        $this->info('Posted ' . $dispatchedJobs->count() . ' articles to Wordpress');
     }
 }

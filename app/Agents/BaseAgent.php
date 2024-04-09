@@ -6,7 +6,6 @@ namespace App\Agents;
 
 use App\Data\Models\Article;
 
-//@todo base agent context interface
 class BaseAgent
 {
 

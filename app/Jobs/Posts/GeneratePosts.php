@@ -4,6 +4,7 @@ namespace App\Jobs\Posts;
 
 use App\Agents\BlogAgent;
 use App\Agents\GithubAgent;
+use App\Agents\GmailAgent;
 use App\Agents\LinkedInAgent;
 use App\Agents\TwitterAgent;
 use App\Data\Models\Article;
@@ -23,7 +24,7 @@ final class GeneratePosts extends Job implements ShouldQueue
         LinkedInAgent::class,
         TwitterAgent::class,
         BlogAgent::class,
-        BlogAgent::class,
+        GmailAgent::class,
     ];
 
     public function __construct(
@@ -39,7 +40,6 @@ final class GeneratePosts extends Job implements ShouldQueue
             $provider = app($provider, [
                 'context' => $this->article
             ]);
-
             $provider->generate();
         }
 

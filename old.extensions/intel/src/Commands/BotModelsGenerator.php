@@ -1,6 +1,5 @@
 <?php
 
-namespace extensions\cornatul-intel\src\Commands;
 
 use intel\src\Channels\Models;
 use intel\src\Jobs\GeneratePost;

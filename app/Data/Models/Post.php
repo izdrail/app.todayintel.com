@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 
-class Post extends Model
+class Post extends \Waterhole\Models\Post
 {
 
     protected $table = 'posts';

@@ -13,15 +13,17 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $body
  * @property string $summary
  * @property array $sentiment
- * @property string $url
+ * @property array $keywords
+ * @property array $images
+ * @property string $link
  * @method static where(string $string, string $url)
  */
 class Article extends Model
 {
 
-    const CREATED_AT = 'created_at';
+    const string CREATED_AT = 'created_at';
 
-    const UPDATED_AT = 'updated_at';
+    const string UPDATED_AT = 'updated_at';
 
     const PENDING = 'pending';
 
@@ -46,12 +48,12 @@ class Article extends Model
     }
 
 
-    public function scopeWhereUrl($query, $url)
+    final function scopeWhereUrl($query, $url)
     {
         return $query->where('link', $url);
     }
 
-    public function scopeWhereStatus($query, $status)
+    final function scopeWhereStatus($query, $status)
     {
         return $query->where('status', $status);
     }

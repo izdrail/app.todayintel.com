@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\Articles;
 
+use App\Data\DTO\KeywordDTO;
+use App\Data\Models\Keyword;
 use App\Jobs\Articles\FindArticles;
 use Illuminate\Support\Collection;
 use Saloon\Exceptions\Request\FatalRequestException;
@@ -29,6 +31,8 @@ final readonly class FindArticlesService
      */
     public function handle(): Collection
     {
-        return ((new FindArticles($this->keyword))->handle());
+        $keyword = Keyword::where('keyword', $this->keyword)->first();
+        $keyword = KeywordDTO::from($keyword->toArray());
+        return ((new FindArticles($keyword))->handle());
     }
 }

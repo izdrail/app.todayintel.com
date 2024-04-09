@@ -15,22 +15,22 @@ use Cornatul\Wordpress\Models\WordpressTerm;
 
 class WebsiteRepository implements WebsiteRepositoryInterface
 {
-    public function createSite(array $data): WordpressWebsite
+    final function createSite(array $data): WordpressWebsite
     {
         return WordpressWebsite::create($data);
     }
 
-    public function deleteSite(int $id): int
+    final function deleteSite(int $id): int
     {
         return  WordpressWebsite::destroy($id);
     }
 
-    public function paginate(int $perPage = 10): LengthAwarePaginator
+    final function paginate(int $perPage = 10): LengthAwarePaginator
     {
         return WordpressWebsite::paginate($perPage);
     }
 
-    public function getSite(int $id): ?WordpressWebsite
+    final function getSite(int $id): ?WordpressWebsite
     {
         return WordpressWebsite::find($id);
     }

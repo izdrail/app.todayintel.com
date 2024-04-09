@@ -14,7 +14,11 @@ use Filament\Notifications\Notification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use JsonException;
 use Lucid\Units\Controller;
+use ReflectionException;
+use Saloon\Exceptions\InvalidResponseClassException;
+use Saloon\Exceptions\PendingRequestException;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 
@@ -25,7 +29,7 @@ class ApiController extends Controller
     /**
      * @throws FatalRequestException
      * @throws RequestException
-     * @throws \JsonException
+     * @throws JsonException
      */
     final function search(Request $request): JsonResponse
     {
@@ -39,26 +43,40 @@ class ApiController extends Controller
     }
 
 
+    /**
+     * @throws FatalRequestException
+     * @throws RequestException
+     * @throws JsonException
+     */
     final function trending():JsonResponse
     {
-        $keywords = ( new TrendingFeature())->getKeywords()->take(100);
+
+        $keywords = ( new TrendingFeature())->handle()->take(200);
 
         return response()->json(['data' => $keywords]);
     }
 
 
     //
+
+    /**
+     * @throws InvalidResponseClassException
+     * @throws ReflectionException
+     * @throws FatalRequestException
+     * @throws PendingRequestException
+     * @throws RequestException
+     */
     final function extract(Request $request): JsonResponse
     {
 
-        $article = Article::where('url', $request->get('url'))->first();
+        $article = Article::where('link', $request->get('url'))->first();
 
         if(!$article)
         {
             $articleDTO = ArticleDTO::from([
 
                 'title' => $request->get('title'),
-                'url' => $request->get('url'),
+                'link' => $request->get('url'),
                 'status' => 'pending'
             ]);
 
@@ -67,11 +85,19 @@ class ApiController extends Controller
             $article = $repository->createOrUpdate($articleDTO);
         }
 
-        $article = $this->serve(ExtractArticlesService::class, [
-            'article' => $article,
-        ]);
 
-        return response()->json([ 'data' => $article]);
+        //check if processed
+         if($article->status == 'processed')
+         {
+             return response()->json([ 'data' => $article]);
+         }
+
+        $article = new ExtractArticlesService($article);
+
+        $response = $article->handle();
+
+
+        return response()->json([ 'data' => $response]);
     }
 
 

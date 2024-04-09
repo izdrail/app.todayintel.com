@@ -40,6 +40,9 @@ return [
     */
 
     'oauth_providers' => [
-        // 'github',
+        'linkedin',
+         'github',
+         'twitter',
+         'facebook',
     ],
 ];

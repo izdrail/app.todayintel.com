@@ -1,14 +1,16 @@
 <?php
-
+declare(strict_types=1);
 namespace App\Data\DTO;
 use Spatie\LaravelData\Data;
-use stdClass;
+
 
 class ArticleDTO extends Data
 {
     public function __construct(
      readonly public ?string $title,
      readonly public ?string $link,
+     readonly public ?string $status,
+     readonly public ?string $summary,
      readonly public ?string $text,
      readonly public ?string $html,
      readonly public ?string $markdown,

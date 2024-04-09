@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace App\Jobs\Articles;
 
+use App\Data\DTO\KeywordDTO;
 use App\Data\Models\Keyword;
 use App\Saloon\Connectors\TodayIntelConnector;
 use App\Saloon\Requests\Today\FindNewsRequest;
@@ -17,7 +18,7 @@ final class FindArticles extends Job
     public int $timeout = 90;
 
     public function __construct(
-        public readonly string $keyword,
+        public readonly KeywordDTO $keyword,
     )
     {
     }
@@ -28,22 +29,11 @@ final class FindArticles extends Job
      */
     final public function handle(): Collection
     {
-        return $this->updateKeyword()->getNews($this->keyword);
-    }
-
-    private function updateKeyword(): self
-    {
-        Keyword::updateOrCreate(
-            ['keyword' => $this->keyword],
-            [
-                'keyword' => $this->keyword,
-                'count' => +1,
-                'sentiment' => +1,
-                'appeared_at' => Carbon::now(),
-            ]
-        );
-
-        return $this;
+        // Fetch today's news articles
+        return (new TodayIntelConnector())
+            ->send(new FindNewsRequest($this->keyword))
+            ->collect('data')
+            ->take(25);
     }
 
     /**
@@ -51,13 +41,9 @@ final class FindArticles extends Job
      * @throws RequestException
      * @throws \JsonException
      */
-    private function getNews(string $keyword): Collection
+    private function getNews(KeywordDTO $keyword): Collection
     {
-        // Fetch today's news articles
-        return (new TodayIntelConnector())
-            ->send(new FindNewsRequest($keyword))
-            ->collect('data')
-            ->take(25);
+
 
     }
 }

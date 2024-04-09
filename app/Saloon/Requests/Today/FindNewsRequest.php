@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace App\Saloon\Requests\Today;
+use App\Data\DTO\KeywordDTO;
 use Illuminate\Support\Facades\Cache;
 use Saloon\CachePlugin\Contracts\Cacheable;
 use Saloon\CachePlugin\Contracts\Driver;
@@ -19,11 +20,10 @@ final class FindNewsRequest extends Request implements Cacheable,HasBody
     use HasJsonBody;
 
 
-
     protected Method $method = Method::POST;
 
 
-    public function __construct(private readonly string $keyword)
+    public function __construct(private readonly KeywordDTO $keyword)
     {
     }
 
@@ -54,7 +54,7 @@ final class FindNewsRequest extends Request implements Cacheable,HasBody
     final function defaultBody(): array
     {
         return [
-            'topic' => $this->keyword,
+            'topic' => $this->keyword->keyword,
         ];
     }
 

@@ -107,7 +107,6 @@ class Social extends Controller
 
         $this->socialSessionManager->destroySocialSessions();
 
-
         Notification::make()
             ->title('Login successful')
             ->success()

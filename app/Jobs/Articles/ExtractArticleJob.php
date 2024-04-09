@@ -6,28 +6,40 @@ use App\Data\DTO\ArticleDTO;
 use App\Saloon\Connectors\TodayIntelConnector;
 use App\Saloon\Requests\Today\ExtractArticleRequest;
 use App\Data\Models\Article;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Lucid\Units\Job;
+use Saloon\Exceptions\InvalidResponseClassException;
+use Saloon\Exceptions\PendingRequestException;
+use Saloon\Exceptions\Request\FatalRequestException;
+use Saloon\Exceptions\Request\RequestException;
 
-final class ExtractArticleJob
+final class ExtractArticleJob extends Job implements ShouldQueue
 {
     public int $timeout = 90;
 
     public function __construct(
-        public readonly Article $article,
+        public ArticleDTO $article,
     )
     {
 
     }
 
+    /**
+     * @throws InvalidResponseClassException
+     * @throws FatalRequestException
+     * @throws \ReflectionException
+     * @throws PendingRequestException
+     * @throws RequestException
+     * @throws \Exception
+     */
     final public function handle(): ArticleDTO
     {
-        // Fetch extract
-        $response =  (new TodayIntelConnector())
-            ->send(new ExtractArticleRequest($this->article->url));
+        $connector = new TodayIntelConnector();
 
-        $data = json_decode($response->body(), true) ?? [];
 
-        return ArticleDTO::from([
-            $data['data']
-        ]);
+        $response = $connector->send(new ExtractArticleRequest($this->article->link));
+
+        return $response->dtoOrFail();
     }
+
 }

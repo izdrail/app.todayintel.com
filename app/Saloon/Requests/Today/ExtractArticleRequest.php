@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 namespace App\Saloon\Requests\Today;
+use App\Data\DTO\ArticleDTO;
+use App\Data\Repositories\ArticlesRepository;
 use Illuminate\Support\Facades\Cache;
 use Saloon\CachePlugin\Contracts\Cacheable;
 use Saloon\CachePlugin\Contracts\Driver;
@@ -10,6 +12,7 @@ use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
+use Saloon\Http\Response;
 
 
 final class ExtractArticleRequest extends Request implements Cacheable, HasBody
@@ -52,5 +55,35 @@ final class ExtractArticleRequest extends Request implements Cacheable, HasBody
         return [
             'link' => $this->url,
         ];
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function createDtoFromResponse($response): ArticleDTO
+    {
+        $data = $response->json()['data'];
+
+        $dto =  new ArticleDTO(
+            $data['title'],
+            $this->url,
+            'processed',
+            $data['summary'],
+            $data['text'],
+            $data['html'],
+            $data['markdown'],
+            $data['spacy'],
+            $data['spacy_markdown'],
+            $data['keywords'],
+            $data['images'],
+            $data['entities'],
+            $data['sentiment']
+        );
+
+        //save to a database
+          $repository = new ArticlesRepository();
+          $repository->createOrUpdate($dto);
+
+         return $dto;
     }
 }

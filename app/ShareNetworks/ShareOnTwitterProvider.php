@@ -43,6 +43,5 @@ readonly class ShareOnTwitterProvider implements ShareContract
 
         $response = $birdElephant->tweets()->tweet($tweet);
 
-        dd($response);
     }
 }

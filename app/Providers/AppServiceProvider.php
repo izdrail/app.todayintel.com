@@ -3,12 +3,20 @@
 namespace App\Providers;
 
 use App\Contracts\GeneratorContract;
+use App\Http\Controllers\Trends\TrendsController;
 use App\Saloon\Connectors\CloudflareConnector;
 use App\Service\Generators\GeneratorService;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
+use Illuminate\Routing\Route;
 use Illuminate\Support\ServiceProvider;
+use SaturnPHP\Intel\Http\Controllers\ArticleController;
+use SaturnPHP\Intel\Http\Controllers\ChatController;
+use SaturnPHP\Intel\Http\Controllers\HackerNewsController;
+use SaturnPHP\Intel\Http\Controllers\NewsController;
+use SaturnPHP\Intel\Http\Controllers\TopicsController;
 use Waterhole\Extend\CpNav;
+use Waterhole\Extend\CpRoutes;
 use Waterhole\View\Components\NavLink;
 
 class AppServiceProvider extends ServiceProvider
@@ -36,6 +44,16 @@ class AppServiceProvider extends ServiceProvider
             20,
             'trends',
         );
+
+        CpNav::add(
+            fn() => new NavLink(
+                label: __('News'),
+                icon: 'tabler-trending-up',
+                route: 'news.index',
+            ),
+            20,
+            'news',
+        );
     }
 
     /**
@@ -44,17 +62,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
-
-//        CpRoutes::add(function () {
-//            Route::get('trends', TrendsController::class . '@index')->name('trends.index');
-//            Route::get('news', NewsController::class . '@index')->name('news.index');
-//            Route::get('hacker', HackerNewsController::class . '@index')->name('hacker.index');
-//            Route::get('chat', ChatController::class . '@index')->name('chat.index');
-//            Route::post('chat', ChatController::class . '@process')->name('chat.process');
-//            Route::get('article/{url}', ArticleController::class . '@index')->name('article.index');
-//            Route::post('article/store', ArticleController::class . '@store')->name('article.store');
-//            Route::post('api/save-all', ArticleController::class . '@saveAll')->name('article.saveAll');
-//            Route::get('/topics/{topic?}', TopicsController::class . '@index')->name('topics.index');
-//        });
     }
 }
+

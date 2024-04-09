@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace App\Networks;
 
 use JsonException;
@@ -14,6 +14,7 @@ class Linked extends LinkedInProvider
     private string $projections = '(sub,name,picture,given_name,family_name,email,locale,email_verified)';
 
     /**
+     *
      * @throws JsonException
      */
     protected function getUserByToken($token):array

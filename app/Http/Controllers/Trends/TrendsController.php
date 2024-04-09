@@ -5,17 +5,27 @@ namespace App\Http\Controllers\Trends;
 
 
 use App\Features\Articles\TrendingFeature;
+use App\Filament\Widgets\TrendingKeywords;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
+use Saloon\Exceptions\Request\FatalRequestException;
+use Saloon\Exceptions\Request\RequestException;
 use Waterhole\Http\Controllers\Controller;
 
 
 class TrendsController extends Controller
 {
 
-    public function index():View
+    /**
+     * @throws FatalRequestException
+     * @throws RequestException
+     * @throws \JsonException
+     */
+    final function index(): Factory|View|Application
     {
-        $keywords = ( new TrendingFeature())->getKeywords()->take(50);
+        $keywords = ( new TrendingFeature())->handle()->take(5000);
 
-        return view('cp.trending.index', compact('keywords'));
+        return view('cp.trending.index', compact('keywords', ));
     }
 }
